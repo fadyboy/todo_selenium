@@ -1,0 +1,4 @@
+*.json
+*.log
+/.pytest_cache
+/auto
