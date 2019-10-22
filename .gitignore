@@ -2,3 +2,5 @@
 *.log
 /.pytest_cache
 /auto
+pages/__pycache__
+tests/__pycache__

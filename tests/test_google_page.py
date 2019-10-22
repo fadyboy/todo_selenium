@@ -14,7 +14,6 @@ class GoogleTest(unittest.TestCase):
         # cls.driver = Firefox(executable_path=cls.data["gecko_driver_path"])
 
 
-
     @classmethod
     def tearDownClass(cls):
         cls.driver.close()
@@ -59,6 +58,19 @@ class GoogleTest(unittest.TestCase):
         if check_if_tasks:
             task_page.delete_all_tasks()
         self.assertFalse(task_page.verify_if_tasks_present())
+
+
+    def test_select_specific_task(self):
+        login_page = LoginPage(self.driver)
+        self.login_to_app(login_page)
+        task_page = TaskPage(self.driver)
+        task_page.enter_new_task(self.data["task3"])
+        self.assertTrue(task_page.verify_task_entered(self.data["task3"]))
+        task_page.enter_new_task(self.data["task4"])
+        self.assertTrue(self.data["task4"])
+        selected_task = task_page.select_specific_task(self.data["task3"])
+        self.assertTrue(selected_task["selected"])
+        self.assertIn(self.data["task3"], selected_task["innerText"])
 
 
     def login_to_app(self, login_page):

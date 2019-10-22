@@ -66,6 +66,21 @@ class TaskPage():
                 sub_item.click()
 
 
+    def select_specific_task(self, task_text):
+        time.sleep(0.5)
+        tasks_list = self.driver.find_elements_by_css_selector("span.b-fb-bn-Oj")
+        task_selected_attributes = {}
+        for task in tasks_list:
+            if task.text == task_text:
+                task.click()
+                # check that checkbox is selected
+                task_selected_box = self.driver.find_element_by_css_selector("div.b-fb-bn.b-fb-bn-rr.b-fb-bn-vn")
+                task_selected_attributes["selected"] = task_selected_box.get_attribute("aria-selected")
+                task_selected_attributes["innerText"] = task_selected_box.get_attribute("innerText")
+
+        return task_selected_attributes
+
+
     def logout_of_app(self):
         # sign out of app by clicking the setting button
         settings = WebDriverWait(self.driver, 15).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "i.Dj-Ej")))
